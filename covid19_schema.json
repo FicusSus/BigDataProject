@@ -1,0 +1,63 @@
+{
+  "database": "covid19_supplementary",
+  "collections": {
+    "user_comments": {
+      "description": "Collection to store user comments on data points",
+      "document": {
+        "_id": "ObjectId",
+        "user_id": {
+          "type": "String",
+          "description": "Identifier for the user who made the comment"
+        },
+        "data_point_id": {
+          "type": "String",
+          "description": "Identifier for the specific data point the comment is related to"
+        },
+        "comment": {
+          "type": "String",
+          "description": "Text of the comment"
+        },
+        "timestamp": {
+          "type": "ISODate",
+          "description": "Date and time when the comment was made"
+        }
+      },
+      "example_document": {
+        "_id": "ObjectId('64f2b5e6e3f3f7c123456789')",
+        "user_id": "user123",
+        "data_point_id": "data_point_456",
+        "comment": "This is a comment on the data point.",
+        "timestamp": "2024-08-21T14:00:00Z"
+      }
+    },
+    "annotations": {
+      "description": "Collection to store annotations on data points",
+      "document": {
+        "_id": "ObjectId",
+        "data_point_id": {
+          "type": "String",
+          "description": "Identifier for the data point the annotation is related to"
+        },
+        "annotation_text": {
+          "type": "String",
+          "description": "Text of the annotation"
+        },
+        "timestamp": {
+          "type": "ISODate",
+          "description": "Date and time when the annotation was made"
+        },
+        "author": {
+          "type": "String",
+          "description": "Name or identifier of the person who made the annotation"
+        }
+      },
+      "example_document": {
+        "_id": "ObjectId('64f2b5e6e3f3f7c123456780')",
+        "data_point_id": "data_point_789",
+        "annotation_text": "Important observation about the data point.",
+        "timestamp": "2024-08-21T14:00:00Z",
+        "author": "analyst_jane"
+      }
+    }
+  }
+}
