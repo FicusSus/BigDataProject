@@ -144,15 +144,6 @@ The platform was developed as part of a Data Engineering Bootcamp to demonstrate
 
 # Project Documentation: COVID-19 Data Integration Analysis and Visualization Platform
 
-## Project Overview
-This project aims to create an integrated data analytics and visualization platform leveraging Snowflake's COVID-19 dataset. The platform combines structured and semi-structured data to provide insights into COVID-19's spread, effects, and patterns across different regions and populations. We utilize a range of technologies including Snowflake, Python, MongoDB, and visualization libraries (Dash, Plotly, and Matplotlib) to develop a dynamic and interactive user interface.
-
-### Technologies Involved:
-- **Snowflake**: Used for structured data storage and SQL operations.
-- **Python**: Backend development, data manipulation, and API development.
-- **MongoDB**: NoSQL DB for storing supplementary semi-structured data like user comments and annotations.
-- **Dash, Plotly, Matplotlib**: For data visualization and frontend dashboard development.
-
 ## Tasks and Implementation
 
 ### Task 1: Setup Snowflake and Fetch COVID-19 Data
