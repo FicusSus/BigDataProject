@@ -1,3 +1,4 @@
+**Student Name**: Kira Solovjova
 # COVID-19 Data Integration, Analysis, and Visualization Platform
 
 ## Project Overview
@@ -139,3 +140,123 @@ The platform was developed as part of a Data Engineering Bootcamp to demonstrate
 2. **Pull Requests**: Submit pull requests with clear descriptions of your changes.
 3. **Testing**: Ensure that your code is tested before submitting. This includes both unit tests and functional tests where applicable.
 4. **Code Reviews**: All code changes must go through a code review process before being merged into the main branch.
+
+
+# Project Documentation: COVID-19 Data Integration Analysis and Visualization Platform
+
+## Project Overview
+This project aims to create an integrated data analytics and visualization platform leveraging Snowflake's COVID-19 dataset. The platform combines structured and semi-structured data to provide insights into COVID-19's spread, effects, and patterns across different regions and populations. We utilize a range of technologies including Snowflake, Python, MongoDB, and visualization libraries (Dash, Plotly, and Matplotlib) to develop a dynamic and interactive user interface.
+
+### Technologies Involved:
+- **Snowflake**: Used for structured data storage and SQL operations.
+- **Python**: Backend development, data manipulation, and API development.
+- **MongoDB**: NoSQL DB for storing supplementary semi-structured data like user comments and annotations.
+- **Dash, Plotly, Matplotlib**: For data visualization and frontend dashboard development.
+
+## Tasks and Implementation
+
+### Task 1: Setup Snowflake and Fetch COVID-19 Data
+We began by setting up a Snowflake account using the AWS Ohio region as required. The Snowflake Marketplace provides access to a free COVID-19 dataset, which was imported and stored in a Snowflake warehouse.
+
+*Implementation*:
+- Created a Snowflake trial account and selected the appropriate dataset.
+- Implemented resource monitors to ensure efficient usage and control over the warehouse's resources.
+
+### Task 2: Data Exploration and Enhancement
+Using SQL queries, we explored the COVID-19 dataset in Snowflake to understand its structure, key data points, and any missing data. We augmented this dataset by integrating additional demographic and economic data (sourced from Kaggle) to enrich the analysis. This data was joined with the COVID-19 dataset in Snowflake for deeper insights.
+
+*Implementation*:
+- SQL queries were used to explore the dataset and detect patterns and gaps.
+- The dataset was augmented with demographic data to provide richer analysis.
+
+### Task 3: NoSQL Data Modeling in MongoDB
+We designed a schema in MongoDB to store supplementary data such as user comments and annotations on specific data points. This schema allows for flexible storage of semi-structured data, which can be used to enhance user interaction with the platform.
+
+*MongoDB Schema*:
+```json
+{
+  "database": "covid19_supplementary",
+  "collections": {
+    "user_comments": {
+      "description": "Stores user comments on data points",
+      "document": {
+        "_id": "ObjectId",
+        "user_id": "String",
+        "data_point_id": "String",
+        "comment": "String",
+        "timestamp": "ISODate"
+      }
+    },
+    "annotations": {
+      "description": "Stores annotations on data points",
+      "document": {
+        "_id": "ObjectId",
+        "data_point_id": "String",
+        "annotation_text": "String",
+        "timestamp": "ISODate",
+        "author": "String"
+      }
+    }
+  }
+}
+```
+
+### Task 4: API Development with Python
+We developed an API using Flask to query Snowflake based on user inputs. The API retrieves data from Snowflake and interacts with MongoDB for additional data such as comments and annotations. Flask caching was implemented to optimize performance for frequently requested data.
+
+*Implementation*:
+- API endpoints were created to handle data requests and store comments.
+- Caching was implemented using Flask-Caching to improve API response times.
+
+### Task 5: Interactive Visualization with Python
+We used Dash, Plotly, and Matplotlib to create an interactive web dashboard that visualizes various metrics such as infection rates, mortality rates, and demographic breakdowns. Users can filter data by date and data type, and the visualizations update accordingly.
+
+*Features*:
+- **Dropdown Selection**: Allows users to select the type of data to visualize.
+- **Date Picker**: Users can filter data by selecting a date range.
+- **Visualizations**: Data is presented through interactive bar charts (Plotly) and static charts (Matplotlib).
+
+### Task 6: Analytical Features
+To add predictive analytics, we implemented time series forecasting using Python libraries such as `statsmodels` and `prophet` to predict future infection rates based on historical data. We also experimented with clustering techniques to segment regions based on COVID-19 spread patterns.
+
+### Task 7: Performance Optimization
+We optimized the performance of our Snowflake SQL queries by using appropriate indexing, query optimization techniques, and resource monitors. We avoided using `SELECT *` and focused on fetching only the required columns.
+
+### Task 8: Caching for Frequently Requested Data
+Caching was implemented within the Flask API for frequently requested data. This reduced the load on the Snowflake warehouse and significantly improved response times for repeated queries.
+
+### Task 9: Pattern Recognition
+We identified patterns within the COVID-19 dataset using Snowflake's `MATCH_RECOGNIZE` feature. This allowed us to detect patterns of increasing or decreasing infection rates across different regions.
+
+*Example Query*:
+```sql
+WITH case_comparison AS (
+  SELECT 
+    country_region,
+    province_state,
+    case_type,
+    date,
+    cases,
+    LAG(cases, 1) OVER (PARTITION BY country_region, province_state, case_type ORDER BY date) AS previous_cases,
+    LAG(cases, 2) OVER (PARTITION BY country_region, province_state, case_type ORDER BY date) AS two_days_ago_cases
+  FROM JHU_COVID_19
+  WHERE case_type LIKE 'Confirmed'
+)
+SELECT * FROM case_comparison
+WHERE cases > previous_cases AND previous_cases > two_days_ago_cases;
+```
+
+### Task 10: Sharing Project with Bootcamp Leader
+The final project, including all code, documentation, and database access, was shared with the Bootcamp project leader for evaluation.
+
+## Insights on COVID-19
+From the analysis, several key insights emerged:
+- **Vaccination Correlation**: There is a clear correlation between vaccination rates and reductions in mortality rates across most regions.
+- **Demographic Impact**: Countries with larger populations showed higher infection rates, especially in regions with lower healthcare infrastructure.
+- **Infection Patterns**: Through pattern recognition, we identified waves of increasing infection rates, often correlating with specific public events or policy changes (e.g., lockdowns).
+
+## Conclusion
+This project demonstrated the power of integrating multiple technologies (Snowflake, Python, MongoDB) to build a comprehensive data analytics platform. The platform not only visualizes COVID-19 data but also allows for user interaction through comments and annotations. Through SQL optimization, caching, and pattern recognition, we created an efficient and dynamic tool that offers valuable insights into the COVID-19 pandemic.
+
+---
+
