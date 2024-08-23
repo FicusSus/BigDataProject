@@ -22,7 +22,7 @@ def connect_snowflake():
             # Create a connection pool
             snowflake_pool = snowflake.connector.connect(
                 user='FICUSSUS',
-                password='Oksana776)',
+                password='NewPassword666',
                 account='cm38812.us-east-2.aws',
                 warehouse='DATA_APPS_DEMO',  # Adjust this warehouse size based on need
                 database='COVID19_EPIDEMIOLOGICAL_DATA',
